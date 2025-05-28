@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Artech{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous" />
+    <link rel="icon" href="{% static 'images/logo2.png' %}" />
+    <style>
+        body {
+            padding: 0 !important;
+            margin: 0%;
+            background: url("{% static 'images/logo1.png' %}") no-repeat center center fixed;
+            background-size: 35%;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            background-position: center;
+        }
+        nav.navbar.fixed-top {
+            top: -10px !important;
+        }
+        .logo-img img{
+            border-radius: 12px;
+            height: 80px;
+        }
+        .search-box{
+           margin-right: 300px;
+           width: 90%;
+           margin-left: 10px;
+        }
+        .navigator{
+            margin-right: 95px;
+        }
+        .container-fluid{
+            background-color: #173aad;
+            padding-top: 0;
+        }
+        .transparent-form {
+          background: rgba(255, 255, 255, 0.7);
+          padding: 30px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          margin-top: 20px;
+        }
+        .Orderform{
+           align-items: center;
+           margin-top: 20px;
+           margin-left: auto;
+           margin-right: auto;
+           max-width: 600px;
+        }
+        nav.navbar {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" style="margin-top: 0; top: 4px;">
+        <div class="container-fluid">
+            <div class="logo-img">
+                <img src="{% static 'images/logo2.png' %}" alt="logo" />
+            </div>
+            {% if request.path != '/login.html' %}
+            {% if request.path == '/orderlist.html' or request.path == '/userlist.html' %}
+            <div class="search-box">
+                <form class="d-flex" role="search" method="get" action="{% if request.path == '/orderlist.html' %}{% url 'order_list' %}{% else %}{% url 'userlist' %}{% endif %}">
+                    <input class="form-control me-2" type="search" name="search" placeholder="" aria-label="Search" value="{{ request.GET.search|default:'' }}" />
+                    <button class="btn btn-outline-success" style="background-color: white" type="submit">Search</button>
+                </form>
+            </div>
+            {% endif %}
+            {% endif %}
+            <div class="navigator">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 60px;">
+                        {% if request.path != '/login.html' %}
+                        <li class="nav-item">
+                            <a class="nav-link active" style="color: white" aria-current="page" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color: white" href="{% url 'about' %}">About</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style="color: white" aria-expanded="false">
+                                More
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+{% if user.is_superuser %}
+<li><a class="dropdown-item" href="{% url 'createacc' %}">Create Account</a></li>
+<li><a class="dropdown-item" href="{% url 'form' %}">Create Form</a></li>
+<li><a class="dropdown-item" href="{% url 'userlist' %}">User List</a></li>
+{% else %}
+{% if user.profile.position != 'Artist' %}
+<li><a class="dropdown-item" href="{% url 'form' %}">Create Form</a></li>
+{% else %}
+<!-- Artist users do not see Create Form button -->
+{% endif %}
+{% endif %}
+                                <li><a class="dropdown-item" href="{% url 'order_list' %}">Customer Order List</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                        {% if request.path == '/login.html' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+<div class="container mt-4">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+</body>
+</html>

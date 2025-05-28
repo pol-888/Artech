@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - Artech{% endblock %}
+
+{% block content %}
+<form method="POST" action="{% url 'profile' %}" style="background-color: rgba(0, 0, 0, 0.15); padding: 20px; border-radius: 8px; max-width: 90vw; max-width: min(600px, 90vw); margin: 80px auto 20px auto;">
+    {% csrf_token %}
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="mb-3" style="text-align: center;">
+        <label for="username" class="form-label" style="color: white;">Username (cannot be changed)</label>
+        <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" readonly style="max-width: 400px; margin: 0 auto;">
+    </div>
+    <div class="mb-3" style="text-align: center;">
+        <label for="first_name" class="form-label" style="color: white;">First Name</label>
+        <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}" style="max-width: 400px; margin: 0 auto;">
+    </div>
+    <div class="mb-3" style="text-align: center;">
+        <label for="last_name" class="form-label" style="color: white;">Last Name</label>
+        <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}" style="max-width: 400px; margin: 0 auto;">
+    </div>
+    <div class="mb-3" style="text-align: center;">
+        <label for="email" class="form-label" style="color: white;">Email Address</label>
+        <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" style="max-width: 400px; margin: 0 auto;">
+    </div>
+    <hr style="border-color: white;">
+    <h4 style="color: white;">Change Password</h4>
+    <div class="mb-3">
+        <label for="password" class="form-label" style="color: white;">New Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter new password" style="max-width: 400px; margin: 0 auto;">
+    </div>
+    <div class="mb-3" style="text-align: center;">
+        <label for="password_confirm" class="form-label" style="color: white;">Confirm New Password</label>
+        <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Confirm new password" style="max-width: 400px; margin: 0 auto;">
+    </div>
+    <button type="submit" class="btn btn-primary">Update Profile</button>
+</form>
+{% endblock %}

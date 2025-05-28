@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Log In - Artech{% endblock %}
+
+{% block content %}
+<div class="container d-flex align-items-center" style="height: 100vh;">
+  <div class="row justify-content-center w-100">
+    <div class="col-md-5 col-lg-4">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h3 class="card-title mb-4 text-center">Log In</h3>
+          
+          {% if messages %}
+          <div class="messages mb-3">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+          
+          <form method="post" action="{% url 'login' %}" novalidate>
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="id_username" class="form-label">Username</label>
+              <input type="text" class="form-control" id="id_username" name="username" placeholder="Enter your username" required autofocus autocomplete="username" />
+            </div>
+            <div class="mb-4">
+              <label for="id_password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="id_password" name="password" placeholder="Enter your password" required autocomplete="current-password" />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Log In</button>
+          </form>
+        </div>
+        <div class="card-footer text-center text-muted small">
+           <a href="#" class="text-decoration-none">Forget Password?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

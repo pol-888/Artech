@@ -1,0 +1,39 @@
+body {
+    padding: 0;
+    margin: 0;
+    background: url('../images/bg.logo.jpg') no-repeat center center fixed; /* Set background image */
+    background-size: 50%; /* Cover the entire area */
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+.logo-img img {
+    border-radius: 12px;
+    height: 80px;
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #173aad !important;
+}
+
+.navbar .nav-link, .navbar .navbar-brand {
+    color: white !important;
+}
+
+.navbar .nav-link:hover, .navbar .navbar-brand:hover {
+    color: #d1d1d1 !important;
+}
+
+.form-container-centered {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-control-shorter {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
